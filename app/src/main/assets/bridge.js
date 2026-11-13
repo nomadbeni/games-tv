@@ -216,6 +216,8 @@
     for (var i = 0; i < list.length; i++) {
       var el = list[i];
       if (el === from || frameOf(el) === frameOf(from)) continue;
+      /* A kártyán belüli gomb (Kedvenc) csak lefelé érhető el; oldalra kártyáról kártyára lép. */
+      if (dir !== 'ArrowDown' && frameOf(from).contains(el)) continue;
       var r = frameOf(el).getBoundingClientRect();
       var main = horiz
         ? (sign > 0 ? r.left - fr.right : fr.left - r.right)

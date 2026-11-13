@@ -96,6 +96,7 @@ test('startlap: a D-pad kártyáról kártyára lép, látható kerettel, A megn
   await press(page, BTN.RIGHT, 'ArrowRight', 'ArrowRight');
   const second = await page.evaluate(() => document.activeElement.getAttribute('href') || document.activeElement.className);
   expect(second).not.toBe(first);
+  expect(second).toMatch(/index\.html$/); // oldalra a következő kártya jön, nem a saját Kedvenc gombja
 
   // Lefelé: a következő sorba lép, a fókusz lejjebb kerül
   const y0 = await page.evaluate(() => document.activeElement.getBoundingClientRect().top + scrollY);
