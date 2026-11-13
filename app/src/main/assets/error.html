@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nincs kapcsolat</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0c10;color:#f4f4f6;font-family:system-ui,sans-serif}
+  body{display:flex;align-items:center;justify-content:center;text-align:center}
+  h1{font-size:40px;margin:0 0 12px}
+  p{font-size:22px;opacity:.85;margin:0 0 32px}
+  p.en{font-size:18px;opacity:.6;margin-top:-24px}
+  button{font:700 26px system-ui,sans-serif;padding:16px 48px;border-radius:14px;border:0;background:#2fbf71;color:#0b0c10}
+  button:focus{outline:5px solid #fff;outline-offset:5px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Nincs internetkapcsolat</h1>
+  <p>A játékok nem töltődtek be. Ellenőrizd a Wi-Fit, aztán nyomd meg az A gombot.</p>
+  <p class="en">No internet connection. Check the Wi-Fi, then press A.</p>
+  <button id="retry" type="button" autofocus>Újra</button>
+</main>
+<script>
+(function(){
+  var HOME='https://nomadbeni.github.io/minigames/';
+  var u=new URLSearchParams(location.search).get('u')||HOME;
+  if(u.indexOf(HOME)!==0)u=HOME;
+  var b=document.getElementById('retry');
+  function go(){location.replace(u)}
+  b.addEventListener('click',go);
+  addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+  b.focus();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Build
+.gradle/
+build/
+.kotlin/
+/captures
+*.apk
+*.aab
+
+# Helyi beállítások és titkok – soha ne kerüljenek a tárolóba
+local.properties
+*.jks
+*.keystore
+keystore.properties
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Playwright
+node_modules/
+test-results/
+playwright-report/
