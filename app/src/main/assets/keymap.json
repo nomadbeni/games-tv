@@ -1,0 +1,40 @@
+{
+  "_comment": "Gombkiosztás. androidKeys: Android billentyűkód → gamepad gomb. keys: gamepad gomb → billentyű (key, code), amelyet a csak billentyűzetes játékok kapnak. appBack: ezek a gombok az app „vissza” műveletét indítják. A Gamepad API-t használó játékok a virtuális gamepadot olvassák, és maguk fordítják billentyűre.",
+  "deadzone": 0.5,
+  "release": 0.4,
+  "androidKeys": {
+    "KEYCODE_BUTTON_A": "A",
+    "KEYCODE_BUTTON_B": "B",
+    "KEYCODE_BUTTON_X": "X",
+    "KEYCODE_BUTTON_Y": "Y",
+    "KEYCODE_BUTTON_L1": "LB",
+    "KEYCODE_BUTTON_R1": "RB",
+    "KEYCODE_BUTTON_L2": "LT",
+    "KEYCODE_BUTTON_R2": "RT",
+    "KEYCODE_BUTTON_SELECT": "SELECT",
+    "KEYCODE_BUTTON_START": "START",
+    "KEYCODE_BUTTON_THUMBL": "L3",
+    "KEYCODE_BUTTON_THUMBR": "R3",
+    "KEYCODE_BUTTON_MODE": "HOME",
+    "KEYCODE_DPAD_UP": "UP",
+    "KEYCODE_DPAD_DOWN": "DOWN",
+    "KEYCODE_DPAD_LEFT": "LEFT",
+    "KEYCODE_DPAD_RIGHT": "RIGHT",
+    "KEYCODE_DPAD_CENTER": "A",
+    "KEYCODE_ENTER": "A",
+    "KEYCODE_NUMPAD_ENTER": "A"
+  },
+  "keys": {
+    "UP": {"key": "ArrowUp", "code": "ArrowUp"},
+    "DOWN": {"key": "ArrowDown", "code": "ArrowDown"},
+    "LEFT": {"key": "ArrowLeft", "code": "ArrowLeft"},
+    "RIGHT": {"key": "ArrowRight", "code": "ArrowRight"},
+    "A": {"key": "Enter", "code": "Enter"},
+    "B": {"key": "Escape", "code": "Escape"},
+    "X": {"key": " ", "code": "Space"},
+    "Y": {"key": "x", "code": "KeyX"},
+    "LB": {"key": "z", "code": "KeyZ"},
+    "START": {"key": "Escape", "code": "Escape"}
+  },
+  "appBack": ["SELECT"]
+}

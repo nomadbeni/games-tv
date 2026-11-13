@@ -1,0 +1,12 @@
+{
+  "name": "games-tv-js-tests",
+  "private": true,
+  "license": "MIT",
+  "description": "Playwright-tesztek a beinjektált kontroller-hídhoz (asztali böngészőben, az élő oldalon).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
+  }
+}
