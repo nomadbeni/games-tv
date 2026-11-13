@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kontroller-próba</title>
+<style>
+  :root{--bg:#0e1514;--ink:#e6efec;--muted:#93a6a2;--on:#3fd2bb;--line:#26332f}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,sans-serif}
+  main{padding:18px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  h1{grid-column:1/-1;margin:0;font-size:24px}
+  h1 small{color:var(--muted);font-weight:400;font-size:14px}
+  .btns{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .b{border:2px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center;font-weight:700;position:relative;overflow:hidden}
+  .b i{position:absolute;inset:auto 0 0 0;background:var(--on);opacity:.35;height:0}
+  .b.on{border-color:var(--on);color:var(--on)}
+  .b.seen{background:#16302b}
+  .hint{grid-column:1/-1;color:var(--muted);font-size:13px;margin:0}
+  .sticks{display:flex;gap:24px;margin-top:16px}
+  .stick{width:140px;height:140px;border:2px solid var(--line);border-radius:50%;position:relative}
+  .stick .dz{position:absolute;inset:25%;border:1px dashed var(--muted);border-radius:50%}
+  .stick b{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--on);left:50%;top:50%}
+  .ax{font-family:monospace;color:var(--muted);margin-top:8px}
+  #log{font-family:monospace;font-size:14px;line-height:1.5;white-space:pre;color:var(--muted);height:420px;overflow:hidden;border:1px solid var(--line);border-radius:10px;padding:10px}
+  #status{color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Kontroller-próba <small id="status">Nyomj meg egy gombot a kontrolleren…</small></h1>
+  <p class="hint">A már látott gomb sötétzöld hátteret kap. A Select az app „vissza” gombja, a Home a rendszeré.</p>
+  <section>
+    <div class="btns" id="btns"></div>
+    <div class="sticks">
+      <div><div class="stick" id="s0"><div class="dz"></div><b></b></div><div class="ax" id="a0">bal kar</div></div>
+      <div><div class="stick" id="s1"><div class="dz"></div><b></b></div><div class="ax" id="a1">jobb kar</div></div>
+    </div>
+  </section>
+  <section>
+    <div id="log"></div>
+  </section>
+</main>
+<script>
+(function(){
+  var NAMES=['A','B','X','Y','LB','RB','LT','RT','Select','Start','L3','R3','↑','↓','←','→','Home'];
+  var box=document.getElementById('btns'),cells=[];
+  NAMES.forEach(function(n){var d=document.createElement('div');d.className='b';d.textContent=n;d.appendChild(document.createElement('i'));box.appendChild(d);cells.push(d)});
+  var lines=[];window.__seen={};
+  function log(s){lines.unshift(s);if(lines.length>22)lines.pop();document.getElementById('log').textContent=lines.join('\n')}
+  ['keydown','keyup'].forEach(function(t){addEventListener(t,function(e){log((t==='keydown'?'▼ ':'▲ ')+t+'  key='+JSON.stringify(e.key)+'  code='+e.code+'  keyCode='+e.keyCode)})});
+  addEventListener('gamepadconnected',function(e){document.getElementById('status').textContent='Csatlakozva: '+(e.gamepad?e.gamepad.id:'?');log('gamepadconnected')});
+  function stick(id,x,y,label){var s=document.getElementById('s'+id).querySelector('b');s.style.left=(50+x*50)+'%';s.style.top=(50+y*50)+'%';document.getElementById('a'+id).textContent=label+'  x='+x.toFixed(2)+'  y='+y.toFixed(2)}
+  function frame(){
+    var g=(navigator.getGamepads?navigator.getGamepads():[])[0];
+    if(g){
+      g.buttons.forEach(function(b,i){if(!cells[i])return;cells[i].classList.toggle('on',b.pressed);if(b.pressed||b.value>.5){cells[i].classList.add('seen');window.__seen[NAMES[i]]=1}cells[i].querySelector('i').style.height=(b.value*100)+'%'});
+      stick(0,g.axes[0]||0,g.axes[1]||0,'bal kar');stick(1,g.axes[2]||0,g.axes[3]||0,'jobb kar');
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>

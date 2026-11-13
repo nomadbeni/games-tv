@@ -209,17 +209,16 @@ class MainActivity : Activity(), InputManager.InputDeviceListener {
             e.isFromSource(InputDevice.SOURCE_DPAD)
 
     private fun handleButton(btn: PadButton, down: Boolean) {
-        if (BuildConfig.DEBUG && down && btn == PadButton.L3) {
-            overlay?.toggle()
-            return
-        }
-        if (BuildConfig.DEBUG && down && btn == PadButton.R3) {
-            webView.loadUrl("$ASSET_ORIGIN/assets/gamepad-test.html")
-            return
-        }
-        // Select: mindig az app „vissza”. B: a startlapon (és az app saját oldalain) is vissza, játékban a játéké.
         val url = webView.url
-        if (btn in keyMap.appBack || (btn == PadButton.B && (isStartPage(url) || isAppPage(url)))) {
+        val testPage = url?.startsWith(TEST_PAGE) == true
+        // Debug gyorsgombok (a próbaoldalon nem: ott minden gomb az oldalé, hogy látszódjon).
+        if (BuildConfig.DEBUG && !testPage && (btn == PadButton.L3 || btn == PadButton.R3)) {
+            if (down && btn == PadButton.L3) overlay?.toggle()
+            if (down && btn == PadButton.R3) webView.loadUrl(TEST_PAGE)
+            return
+        }
+        // Select: mindig az app „vissza”. B: a startlapon és a hibaoldalon is vissza, játékban a játéké.
+        if (btn in keyMap.appBack || (btn == PadButton.B && (isStartPage(url) || url?.startsWith(ERROR_PAGE) == true))) {
             if (!down) goBack()
             return
         }
@@ -340,6 +339,7 @@ class MainActivity : Activity(), InputManager.InputDeviceListener {
         const val HOME_URL = "$SITE_ORIGIN/minigames/"
         const val ASSET_ORIGIN = "https://" + WebViewAssetLoader.DEFAULT_DOMAIN
         const val ERROR_PAGE = "$ASSET_ORIGIN/assets/error.html"
+        const val TEST_PAGE = "$ASSET_ORIGIN/assets/gamepad-test.html"
         private const val EXIT_WINDOW_MS = 2000L
         private const val AXIS_EPSILON = 0.02f
 
